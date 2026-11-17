@@ -25,7 +25,7 @@ function x = met_has(f, N, x0)
         % The acceptance probability generated
         ratio =  f(proposedstep)  /f(x(2,k));
         alpha = min(1, ratio);
-        %we actualise the probability by "rolling a dice"
+        %we actualize the probability by "rolling a dice"
         y = rand;
         if y < alpha
             x(2,k+1) = proposedstep;
@@ -47,10 +47,9 @@ hold off
 
 figure(2)
 
-
 % Remove burn-in and extract sampled values
 samples = markov_chain(2,burn_in+1:end);
-
+samplesindex = markov_chain(1,burn_in+1:end);
 % Plot histogram of samples
 histogram(samples,50,'Normalization','pdf');
 hold on
@@ -64,6 +63,6 @@ xlim([0, 1])
 
 hold off
 
-
-% Include the burn in x(1000:end)
-%hist function with f*play around some constant
+%trace with burnin removed
+figure(3)
+plot(samplesindex, samples);
