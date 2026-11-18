@@ -37,10 +37,19 @@ function x = met_has(f, N, x0)
 end
 
 % plot trace
+
 %with a running average to see burn in
 runningaverage = cumsum(markov_chain(2,:)) ./ (1:length(markov_chain(2,:)));
 
+% Remove burn-in and extract sampled values
+samples = markov_chain(2,burn_in+1:end);
+samplesindex = markov_chain(1,burn_in+1:end)
+
+%Plots trace and cumulative sum of the markov chain
+%Shows graphs with and without the burn-in period
 figure(1)
+
+subplot(2, 1, 1)
 
 hold on
 plot(markov_chain(1,:), markov_chain(2,:), "LineWidth", 0.25);
@@ -51,31 +60,9 @@ legend("Trace of Values", "Cumulative Average", Location="northeast")
 title("A Trace of the Markov Chain's State's Values as M-H is Implemented")
 hold off
 
-% Plot histogram against target density
-
-figure(2)
-
-% Remove burn-in and extract sampled values
-samples = markov_chain(2,burn_in+1:end);
-samplesindex = markov_chain(1,burn_in+1:end);
-
-% Plot histogram of samples
-histogram(samples,50,'Normalization','pdf');
-hold on
-
-% Plot target density
-x1 = sort(samples);
-normalisingconstant = integral(f,0,1);
-plot(x1, normalisingconstant*f(x1), "LineWidth",1)
-
-% Format graph
-xlim([0, 1])
-title("Sample Histogram Compared With Original Density Function")
-legend('Sample histogram', 'Original Function with normalising constant = 1')
-hold off
-
 %trace with burnin removed
-figure(3)
+subplot(2, 1, 2)
+
 hold on;
 plot(samplesindex, samples);
 plot(samplesindex, runningaverage(burn_in+1:end),'Color','Black', "LineWidth",1)
@@ -85,3 +72,29 @@ ylabel("Value of State in Markov Chain")
 legend("Trace of Values", "Cumulative Average", Location="northeast")
 title("A Trace of the Markov Chain's State's Values with Burn-in Removed")
 hold off;
+% Plot histogram against target density
+
+figure(2)
+
+% Remove burn-in and extract sampled values
+
+
+% Plot histogram of samples
+histogram(samples,50,'Normalization','pdf');
+hold on
+
+% Plot target density
+x1 = sort(samples);
+normalisingconstant = integral(f,0,1);
+normalised_data = f(x1) / normalisingconstant;
+plot(x1, normalised_data, "LineWidth",1)
+
+% Format graph
+xlim([0, 1])
+title("Sample Histogram Compared With Original Density Function")
+legend('Sample histogram', 'Original Function with normalising constant = 1')
+hold off
+
+%trace with burnin removed
+
+
