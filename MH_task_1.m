@@ -4,9 +4,9 @@ clear; clc; close all;
 
 f = @(x) exp(-5*(x-0.5).^2).*cos(3*pi*x)+1 ;
 x0 = 0.5;
-rng(1)
+%rng(1)
 markov_chain = met_has(f,10000,x0);
-burn_in = 1000 ;
+burn_in = 500;
 
 function x = met_has(f, N, x0)
     %Create a vector of size N - Where we will generate our Markov chain
@@ -37,10 +37,18 @@ function x = met_has(f, N, x0)
 end
 
 % plot trace
+%with a running average to see burn in
+runningaverage = cumsum(markov_chain(2,:)) ./ (1:length(markov_chain(2,:)));
+
 figure(1)
 
 hold on
-plot(markov_chain(1,:), markov_chain(2,:));
+plot(markov_chain(1,:), markov_chain(2,:), "LineWidth", 0.25);
+plot(runningaverage, 'Color','Black', "LineWidth",1)
+xlabel("Index of State in Markov Chain")
+ylabel("Value of State in Markov Chain")
+legend("Trace of Values", "Cumulative Average", Location="northeast")
+title("A Trace of the Markov Chain's State's Values as M-H is Implemented")
 hold off
 
 % Plot histogram against target density
@@ -50,19 +58,30 @@ figure(2)
 % Remove burn-in and extract sampled values
 samples = markov_chain(2,burn_in+1:end);
 samplesindex = markov_chain(1,burn_in+1:end);
+
 % Plot histogram of samples
 histogram(samples,50,'Normalization','pdf');
 hold on
 
 % Plot target density
 x1 = sort(samples);
-plot(x1, f(x1))
+normalisingconstant = integral(f,0,1);
+plot(x1, normalisingconstant*f(x1), "LineWidth",1)
 
 % Format graph
 xlim([0, 1])
-
+title("Sample Histogram Compared With Original Density Function")
+legend('Sample histogram', 'Original Function with normalising constant = 1')
 hold off
 
 %trace with burnin removed
 figure(3)
+hold on;
 plot(samplesindex, samples);
+plot(samplesindex, runningaverage(burn_in+1:end),'Color','Black', "LineWidth",1)
+xlim([0 10000])
+xlabel("Index of State in Markov Chain")
+ylabel("Value of State in Markov Chain")
+legend("Trace of Values", "Cumulative Average", Location="northeast")
+title("A Trace of the Markov Chain's State's Values with Burn-in Removed")
+hold off;
