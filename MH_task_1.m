@@ -60,8 +60,8 @@ plot(markov_chain(1,:), markov_chain(2,:), "LineWidth", 0.25);
 plot(running_average, 'Color','Black', "LineWidth",1.5)
 xlabel("Index of State in Markov Chain")
 ylabel("Value of State in Markov Chain")
-legend("Trace of Values", "Cumulative Average", Location="northeast")
-title("A Trace of the Markov Chain's State Values as M-H is Implemented")
+legend("Trace of Values", "Cumulative Average", "FontSize", 16, Location="northeast")
+title("A Trace of the Markov Chain's State Values as M-H is Implemented", "FontSize", 16)
 hold off
 
 % Trace with burn-in removed
@@ -73,8 +73,8 @@ plot(sample_indices, running_average(burn_in+1:end),'Color','Black', "LineWidth"
 xlim([0 10000])
 xlabel("Index of State in Markov Chain")
 ylabel("Value of State in Markov Chain")
-legend("Trace of Values", "Cumulative Average", Location="northeast")
-title("A Trace of the Markov Chain's State Values with Burn-in Removed")
+legend("Trace of Values", "Cumulative Average", "FontSize", 16,Location="northeast")
+title("A Trace of the Markov Chain's State Values with Burn-in Removed","FontSize", 16)
 hold off
 
 
@@ -102,7 +102,7 @@ plot(x_values, normalised_density, "LineWidth",1.5)
 % Format graph
 xlim([0, 1])
 ylim([0, 2.5])
-title("Sample Histogram Compared With Normalised Target Density")
-legend('Sample Histogram', 'Normalised Target Density')
+title("Sample Histogram Compared With Normalised Target Density","FontSize", 16)
+legend('Sample Histogram', 'Normalised Target Density',"FontSize", 16)
 hold off
 
