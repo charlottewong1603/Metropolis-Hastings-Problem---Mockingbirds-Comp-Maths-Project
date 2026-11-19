@@ -6,6 +6,7 @@ f = @(x) exp(-5*(x-0.5).^2).*cos(3*pi*x)+1;
 x0 = 0.5;
 % rng(1)
 markov_chain = met_has(f,10000,x0);
+markov_chain_small = met_has(f,1000,x0);
 burn_in = 500;
 
 function x = met_has(f, N, x0)
@@ -78,16 +79,13 @@ title("A Trace of the Markov Chain's State Values with Burn-in Removed","FontSiz
 hold off
 
 
-% Figure 2: Compare sampled distribution with normalised target density
+% Figure 2: Compare sampled distributions with normalised target density
 figure(2)
 
 % Remove burn-in and extract sampled values
 samples = markov_chain(2,burn_in+1:end);
 sample_indices = markov_chain(1,burn_in+1:end);
-
-% Plot histogram of samples after burn-in
-histogram(samples,50,'Normalization','pdf');
-hold on
+samples_small = markov_chain_small(2,burn_in+1:end);
 
 % Generate evenly spaced values over [0,1] to plot a smooth target density
 x_values = linspace(0,1,10000);
@@ -96,13 +94,43 @@ x_values = linspace(0,1,10000);
 normalising_constant = integral(f,0,1);
 normalised_density = f(x_values) / normalising_constant;
 
+% Histogram for N = 1000
+subplot(1, 2, 1)
+
+% Plot histogram of samples after burn-in
+histogram(samples_small,30,'Normalization','pdf','BinLimits',[0,1]);
+hold on
+
 % Plot normalised target density
 plot(x_values, normalised_density, "LineWidth",1.5)
 
 % Format graph
 xlim([0, 1])
 ylim([0, 2.5])
-title("Sample Histogram Compared With Normalised Target Density","FontSize", 16)
-legend('Sample Histogram', 'Normalised Target Density',"FontSize", 16)
+xlabel("State Value, x")
+ylabel("Probability Density")
+title("N = 1000","FontSize", 16)
+legend('Sample Histogram', 'Normalised Target Density',"FontSize", 12)
 hold off
 
+
+% Histogram for N = 10000
+subplot(1, 2, 2)
+
+% Plot histogram of samples after burn-in
+histogram(samples,30,'Normalization','pdf','BinLimits',[0,1]);
+hold on
+
+% Plot normalised target density
+plot(x_values, normalised_density, "LineWidth",1.5)
+
+% Format graph
+xlim([0, 1])
+ylim([0, 2.5])
+xlabel("State Value, x")
+ylabel("Probability Density")
+title("N = 10000","FontSize", 16)
+legend('Sample Histogram', 'Normalised Target Density',"FontSize", 12)
+hold off
+
+sgtitle("Sample Histograms Compared With Normalised Target Density","FontSize",16)
