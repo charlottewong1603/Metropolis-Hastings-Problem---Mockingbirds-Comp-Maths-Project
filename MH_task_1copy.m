@@ -67,16 +67,15 @@ histogram(samples,50,'Normalization','pdf');
 hold on
 
 % Plot target density
-sorted_samples = sort(samples);
-normalising_constant = integral(f,0,1);
-normalised_density = f(sorted_samples) / normalising_constant;
-
-plot(sorted_samples, normalised_density, "LineWidth",1)
+x1 = linspace(0,1,10000);
+normalisingconstant = integral(f,0,1);
+plot(x1, f(x1)/normalisingconstant, "LineWidth",1)
 
 % Format graph
 xlim([0, 1])
+ylim([0,2.5])
 title("Sample Histogram Compared With Original Density Function")
-legend('Sample Histogram', 'Normalised Target Density')
+legend('Sample histogram', 'Original Function with normalising constant = 1')
 hold off
 
 % Trace with burn-in removed
