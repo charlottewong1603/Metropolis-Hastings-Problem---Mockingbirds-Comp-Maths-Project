@@ -66,6 +66,7 @@ sample_indices = markov_chain(1,burn_in+1:end);
 histogram(samples,50,'Normalization','pdf');
 hold on
 
+%%
 % Plot target density
 x1 = linspace(0,1,10000);
 normalisingconstant = integral(f,0,1);
@@ -78,6 +79,7 @@ title("Sample Histogram Compared With Original Density Function")
 legend('Sample histogram', 'Original Function with normalising constant = 1')
 hold off
 
+%%
 % Trace with burn-in removed
 figure(3)
 

@@ -57,7 +57,7 @@ subplot(2, 1, 1)
 
 hold on
 plot(markov_chain(1,:), markov_chain(2,:), "LineWidth", 0.25);
-plot(running_average, 'Color','Black', "LineWidth",2)
+plot(running_average, 'Color','Black', "LineWidth",1.5)
 xlabel("Index of State in Markov Chain")
 ylabel("Value of State in Markov Chain")
 legend("Trace of Values", "Cumulative Average", Location="northeast")
@@ -69,7 +69,7 @@ subplot(2, 1, 2)
 
 hold on
 plot(sample_indices, samples);
-plot(sample_indices, running_average(burn_in+1:end),'Color','Black', "LineWidth",2)
+plot(sample_indices, running_average(burn_in+1:end),'Color','Black', "LineWidth",1.5)
 xlim([0 10000])
 xlabel("Index of State in Markov Chain")
 ylabel("Value of State in Markov Chain")
@@ -97,7 +97,7 @@ normalising_constant = integral(f,0,1);
 normalised_density = f(x_values) / normalising_constant;
 
 % Plot normalised target density
-plot(x_values, normalised_density, "LineWidth",1)
+plot(x_values, normalised_density, "LineWidth",1.5)
 
 % Format graph
 xlim([0, 1])
