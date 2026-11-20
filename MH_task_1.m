@@ -3,7 +3,7 @@
 clear; clc; close all;
 
 f = @(x) exp(-5*(x-0.5).^2).*cos(3*pi*x)+1;
-x0 = 0.5;
+x0 = rand;
 % rng(1)
 markov_chain = met_has(f,10000,x0);
 burn_in = 500;
