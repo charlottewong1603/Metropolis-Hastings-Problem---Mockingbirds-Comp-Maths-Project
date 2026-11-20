@@ -34,7 +34,7 @@ end
 %create (random) initial spin sequence
 SpinSeq = 2*floor(2*rand(1,SpinSeqLength))-1;
 %initialise vector to store magnetisations
-Magnetisations = zeros(3,Samples);
+Magnetisations = zeros(length(Temperatures),Samples);
 
 for k = 1:length(Temperatures)
     %run the burn-in period
