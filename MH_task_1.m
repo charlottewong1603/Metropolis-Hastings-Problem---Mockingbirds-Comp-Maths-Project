@@ -102,8 +102,8 @@ plot(x_values, normalised_density, "LineWidth",1.5)
 % Format graph
 xlim([0, 1])
 ylim([0, 2.5])
-xlabel("State Value, x")
-ylabel("Probability Density")
+xlabel("State Value, x", "FontSize", 15)
+ylabel("Probability Density", "FontSize", 15)
 title("Sample Histogram Compared With Normalised Target Density","FontSize", 16)
 legend('Sample Histogram', 'Normalised Target Density',"FontSize", 16)
 hold off
