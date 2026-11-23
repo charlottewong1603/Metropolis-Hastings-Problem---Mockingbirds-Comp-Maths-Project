@@ -9,6 +9,8 @@ BurnIn = 5000;
 %seems to need very large sample sizes (10^6) to behave smoothly for small
 %temperatures
 Samples = 1000000;
+a = 1;
+
 
 %% M-H ALGORITHM
 %function to perform a single pass of the algorithm
@@ -19,7 +21,12 @@ SpinToFlip = randi(length(InputSpinSeq));
 OutputSpinSeq = InputSpinSeq;
 OutputSpinSeq(SpinToFlip) = -OutputSpinSeq(SpinToFlip);
 %calculate energy before and after spin flip
-Energy = -sum(InputSpinSeq(1:end-1).*InputSpinSeq(2:end));
+for i = 1:N 
+    for j = i+1:N
+        Energy = -sum(1/(abs(i-j)^a).*InputSpinSeq(i).*InputSpinSeq(j));
+    end
+end
+
 NewEnergy = -sum(OutputSpinSeq(1:end-1).*OutputSpinSeq(2:end));
 %calculate acceptance probability
 AcceptProb = min(1, exp((Energy-NewEnergy)/Temperature));
