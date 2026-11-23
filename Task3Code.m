@@ -21,8 +21,8 @@ SpinToFlip = randi(length(InputSpinSeq));
 OutputSpinSeq = InputSpinSeq;
 OutputSpinSeq(SpinToFlip) = -OutputSpinSeq(SpinToFlip);
 %calculate energy before and after spin flip
-for i = 1:N 
-    for j = i+1:N
+for i = 1:
+    for j = i+1:
         Energy = -sum(1/(abs(i-j)^a).*InputSpinSeq(i).*InputSpinSeq(j));
     end
 end
