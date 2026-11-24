@@ -9,6 +9,8 @@ BurnIn = 5000;
 %seems to need very large sample sizes (10^6) to behave smoothly for small
 %temperatures
 Samples = 1000000;
+%constant a_chosen for new energy equation / adapt if it is necessary 
+a = 2;
 
 %% M-H ALGORITHM
 %function to perform a single pass of the algorithm
@@ -18,9 +20,23 @@ SpinToFlip = randi(length(InputSpinSeq));
 %create new sequence and flip the spin in that position
 OutputSpinSeq = InputSpinSeq;
 OutputSpinSeq(SpinToFlip) = -OutputSpinSeq(SpinToFlip);
-%calculate energy before and after spin flip
-Energy = -sum(InputSpinSeq(1:end-1).*InputSpinSeq(2:end));
-NewEnergy = -sum(OutputSpinSeq(1:end-1).*OutputSpinSeq(2:end));
+
+%initialising the energies of the spins
+Energy = 0;
+NewEnergy = 0;
+%spin sequence energy change for the input 
+%reviewed the computaitonal complexity using both the vectorisation and
+%for loops still give a O(N^2) complexity
+for i=1:length(InputSpinSeq)
+    for j=1:length(InputSpinSeq)
+        if i ~= j
+            Energy = Energy + -(InputSpinSeq(j) * InputSpinSeq(i)) / (abs(i-j))^a;
+            NewEnergy = NewEnergy + -(OutputSpinSeq(j) * OutputSpinSeq(i)) / (abs(i-j))^a;
+        end
+    end
+end
+
+
 %calculate acceptance probability
 AcceptProb = min(1, exp((Energy-NewEnergy)/Temperature));
 %generate random number on [0,1] and compare with acceptance probability
@@ -31,6 +47,7 @@ else
     OutputSpinSeq = InputSpinSeq;
 end
 end
+
 
 %% SAMPLING
 %initialise vector to store average values of |mu|
