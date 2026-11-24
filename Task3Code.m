@@ -9,7 +9,7 @@ BurnIn = 5000;
 %seems to need very large sample sizes (10^6) to behave smoothly for small
 %temperatures
 Samples = 1000000;
-%constant a_chosen for new energy equation / adapt if it is necessary 
+%constant a chosen for new energy equation / adapt if it is necessary 
 a = 2;
 
 %% M-H ALGORITHM
