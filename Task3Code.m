@@ -8,13 +8,13 @@ BurnIn = 5000;
 %set number of samples to take (after burn-in)
 %seems to need very large sample sizes (10^6) to behave smoothly for small
 %temperatures
-Samples = 1000000;
+Samples = 10000;
 %constant a chosen for new energy equation / adapt if it is necessary 
 a = 2;
 
 %% M-H ALGORITHM
 %function to perform a single pass of the algorithm
-function OutputSpinSeq = MH_iteration(InputSpinSeq,Temperature)
+function OutputSpinSeq = MH_iteration(InputSpinSeq,Temperature,a)
 %choose random position in sequence to flip
 SpinToFlip = randi(length(InputSpinSeq));
 %create new sequence and flip the spin in that position
@@ -60,11 +60,11 @@ for k = 1:length(Temperatures)
     Magnetisations = zeros(1,Samples);
     %run the burn-in period
     for i = 1:BurnIn
-        SpinSeq = MH_iteration(SpinSeq,Temperatures(k));
+        SpinSeq = MH_iteration(SpinSeq,Temperatures(k),a);
     end
     %take samples and their magnetisations
     for j=1:Samples
-        SpinSeq = MH_iteration(SpinSeq,Temperatures(k));
+        SpinSeq = MH_iteration(SpinSeq,Temperatures(k),a);
         %calculate magnetisation (just equal to mean of spins), store in vector
         Magnetisations(j) = mean(SpinSeq);
     end
