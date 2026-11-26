@@ -1,16 +1,16 @@
 %% PARAMETERS
 %set values of temperature to look at
-Temperatures = logspace(-1,3,10);
+Temperatures = logspace(-1,3,50);
 %set length of spin sequence
-SpinSeqLength = 100;
+SpinSeqLength = 200;
 %set burn-in number
-BurnIn = 1000;
+BurnIn = 50000;
 %set number of samples to take (after burn-in)
 %seems to need very large sample sizes (10^6) to behave smoothly for small
 %temperatures
-Samples = 10000;
+Samples = 1000000;
 %constant a chosen for new energy equation / adapt if it is necessary 
-a_values = [0.5, 1, 1.5, 2, 2.5];
+a_values = [ 1.5, 2, 2.5];
 
 %% M-H ALGORITHM
 %function to perform a single pass of the algorithm
@@ -81,10 +81,21 @@ semilogx(Temperatures,AvgAbsMags(1,:),'LineWidth',2,'Color','r')
 hold on
 semilogx(Temperatures,AvgAbsMags(2,:),'LineWidth',2,'Color','g')
 semilogx(Temperatures,AvgAbsMags(3,:),'LineWidth',2,'Color','b')
-semilogx(Temperatures,AvgAbsMags(4,:),'LineWidth',2,'Color','y')
-semilogx(Temperatures,AvgAbsMags(5,:),'LineWidth',2,'Color','k')
 xlabel("Temperature")
 ylabel("Mean Absolute Magnetisation")
 title("Estimate for $|\mu|$ as temperature varies", 'Interpreter','Latex')
 fontsize(15,"points"); grid on
-legend('$a=0.5$','$a=1$','$a=1.5$','$a=2$','$a=2.5$','Interpreter','Latex')
+legend('$a=1.5$','$a=2$','$a=2.5$','Interpreter','Latex')
+
+figure;
+semilogx(Temperatures,AvgAbsMags(1,:),'LineWidth',2,'Color','r')
+hold on
+semilogx(Temperatures,AvgAbsMags(2,:),'LineWidth',2,'Color','g')
+semilogx(Temperatures,AvgAbsMags(3,:),'LineWidth',2,'Color','b')
+
+xlim([1 300]);
+xlabel("Temperature")
+ylabel("Mean Absolute Magnetisation")
+title("Estimate for $|\mu|$ as temperature varies", 'Interpreter','Latex')
+fontsize(15,"points"); grid on
+legend('$a=1.5$','$a=2$','$a=2.5$','Interpreter','Latex')
