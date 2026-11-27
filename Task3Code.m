@@ -93,7 +93,7 @@ hold on
 semilogx(Temperatures,AvgAbsMags(2,:),'LineWidth',2,'Color','g')
 semilogx(Temperatures,AvgAbsMags(3,:),'LineWidth',2,'Color','b')
 
-xlim([1 300]);
+xlim([0.25 30]);
 xlabel("Temperature")
 ylabel("Mean Absolute Magnetisation")
 title("Estimate for $|\mu|$ as temperature varies", 'Interpreter','Latex')
