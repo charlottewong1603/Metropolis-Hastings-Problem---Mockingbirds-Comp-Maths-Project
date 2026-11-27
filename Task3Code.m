@@ -1,8 +1,8 @@
 %% PARAMETERS
 %set values of temperature to look at
-Temperatures = logspace(-1,3,50);
+Temperatures = logspace(-1,3,30);
 %set length of spin sequence
-SpinSeqLength = 200;
+SpinSeqLength = 100;
 %set burn-in number
 BurnIn = 50000;
 %set number of samples to take (after burn-in)
